@@ -1,0 +1,383 @@
+{
+  "team": "Ripple",
+  "envs": [
+    {
+      "name": "dev",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:11180",
+          "kube": "nbnplus-kube.dev.cly.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.dev.cly.np.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    },
+    {
+      "name": "sqi",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:11280",
+          "kube": "nbnplus-kube.sqi.cly.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.sqi.cly.np.top.corp.telstra.com"
+        },
+        {
+          "server": "stl",
+          "url": "http://appointplus:12280",
+          "kube": "nbnplus-kube.sqi.stl.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.sqi.stl.np.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    },
+    {
+      "name": "uat",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:11380",
+          "kube": "nbnplus-kube.uat.cly.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.uat.cly.np.top.corp.telstra.com"
+        },
+        {
+          "server": "stl",
+          "url": "http://appointplus:12380",
+          "kube": "nbnplus-kube.uat.stl.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.uat.stl.np.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    },
+    {
+      "name": "svt",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:11480",
+          "kube": "nbnplus-kube.svt.cly.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.svt.cly.np.top.corp.telstra.com"
+        },
+        {
+          "server": "stl",
+          "url": "http://appointplus:12480",
+          "kube": "nbnplus-kube.svt.stl.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-a.sqi.stl.np.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    },
+    {
+      "name": "preprod",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:21180",
+          "kube": "nbnplus-kube.preprod.cly.pr.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-b.preprod.cly.pr.top.corp.telstra.com"
+        },
+        {
+          "server": "stl",
+          "url": "http://appointplus:22180",
+          "kube": "nbnplus-kube.preprod.stl.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-b.preprod.stl.pr.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    },
+    {
+      "name": "prod",
+      "hosts": [
+        {
+          "server": "cly",
+          "url": "http://appointplus:21280",
+          "kube": "nbnplus-kube.prod.cly.pr.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-b.prod.cly.pr.top.corp.telstra.com"
+        },
+        {
+          "server": "stl",
+          "url": "http://appointplus:22280",
+          "kube": "nbnplus-kube.prod.stl.np.top.corp.telstra.com",
+          "vm": "vm00001.nbnplus-kube-b.prod.stl.pr.top.corp.telstra.com"
+        }
+      ],
+      "config": [
+        {
+          "name": "Voice DM Orchestrator",
+          "pod": "svc-voice-dm-orchestrator",
+          "path": "/v1/voice-dm"
+        },
+        {
+          "name": "CIMS Facade",
+          "pod": "svc-voice-activation",
+          "path": "/activation/v1"
+        },
+        {
+          "name": "Fabs Facade",
+          "pod": "svc-fabs-facade",
+          "path": "/application/fabs/v1"
+        },
+        {
+          "name": "DMS DM",
+          "pod": "svc-dms-dm",
+          "path": "/device-dm/v1/device/provision"
+        },
+        {
+          "name": "AUTOCAT Facade",
+          "pod": "svc-number-redirection-service",
+          "path": "/v1/networks/fnns/nbn-routings"
+        },
+        {
+          "name": "Service Inventory consolidated",
+          "pod": "svc-service-inventory-consolidated",
+          "path": "/v1/svc-service-inventory-consolidated"
+        },
+        {
+          "name": "Device Dm Dispatcher",
+          "pod": "svc-device-dm-dispatcher",
+          "path": "/v1/svc-device-dm-dispatcher"
+        },
+        {
+          "name": "Hybrid BOH Cleanup",
+          "pod": "svc-hybrid20-boh-cleanup",
+          "path": "/v1/svc-hybrid20-boh-cleanup"
+        },
+        {
+          "name": "Voice DM V2",
+          "pod": "svc-voice-dm",
+          "path": "/voice-dm/v2"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>NBN+ Micro Services Dashboard</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-animate.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script>
+         var app = angular.module('myApp', []);
+         app.controller('myCtrl', function($scope, $http, $interval) {
+             $scope.expandenv = true;
+         	$scope.expand = false;
+         	$scope.loaded = false;
+         	$http.get("team.json")
+             .then(function(response) {
+                 $scope.team = response.data.team;
+         		$scope.envs = response.data.envs;
+         		
+         		for (i = 0; i < $scope.envs.length; i++) {
+         		  var env = $scope.envs[i];
+         		  var hosts = env.hosts;
+         		  var config = env.config;
+         		  var newConfig = [];
+         		  for(j = 0; j < config.length; j++) {
+         		    for(k = 0; k < hosts.length; k++) {
+         			   var temp = Object.assign({}, config[j]);
+         			   temp.server = env.name + " " + hosts[k].server;
+         			   temp.url = hosts[k].url + temp.path + "/_info";
+         			   temp.spin = false;
+         			   temp.kube = hosts[k].kube;
+         			   temp.vm = hosts[k].vm;
+         			   temp.apidoc = hosts[k].url + "/registry-dashboard/v1/apidoc/#";
+         			   newConfig.push(temp);
+         			   $scope.refresh(temp);
+         			}
+         		  }
+         		  env.config = newConfig;
+         		}
+         		console.log("loaded");
+         		$scope.loaded = true;
+             });
+         	$scope.refresh = function($pod) {
+         	console.log("Refreshing " + $pod.pod + " " + $pod.server);
+         	       $pod.spin = true;
+         		   $http.get($pod.url)
+             .then(function(response) {
+         	
+         	$pod.ok = response.status == 200 && response.data.id != undefined;
+         	if($pod.ok) {
+         	$pod.maven = response.data.version;
+         	if ($pod.maven == "notfound") {
+         	    $pod.maven = "Unknown"
+         	} else {
+         	   $pod.maven= "v" + $pod.maven;
+         	}
+         	$pod.deployedTimestamp = getDeployed(response.data.deployed);
+         	$pod.runningSince = getRunningSince($pod.deployedTimestamp);
+         	$pod.printdate = $pod.deployedTimestamp.toLocaleString();
+         	$pod.hostFullName = response.data.hostFullName;
+         	$pod.title = response.data.title;
+         	$pod.description = response.data.description;
+         	$pod.apiVersion = response.data.apiVersion;
+         	$pod.libVersion = response.data.libVersion;
+         	$pod.apidoc = $pod.apidoc + response.data.name; 
+         	}
+         	console.log($pod.pod + " " + $pod.server + " loaded");
+         	 $pod.spin = false;
+         	}).catch(function(reason){
+         	  console.log($pod.pod + " " + $pod.server + " failed");
+         	  $pod.ok = false;
+         	  $pod.spin = false;
+         	});   
+         		};
+         		
+         		$scope.auto = function () {
+         		$interval(function(){
+         		console.log("cron job started");
+         		for (i = 0; i < $scope.envs.length; i++) {
+         		var env = $scope.envs[i];
+         		  var config = env.config;
+         		  var newConfig = [];
+         		  for(j = 0; j < config.length; j++) {
+         		  console.log("Auto " + config[j].pod + " " + config[j].server)
+                     $scope.refresh(config[j]);
+         		  }
+         		  }
+                 },60000)
+         		};
+         	    $scope.auto();
+         		
+         		function getDeployed(aDate) {
+         		   return new Date(new Date(aDate).getTime() - 10*60*60*1000);
+         		}
+         		
+         		function getRunningSince(aD) {
+         			var d = new Date();
+         			var aaD = (d.getTime() - aD.getTime())/1000;
+         			var txt = "Running since ";
+         			if(aaD >= 86400) {
+         		    txt+= Math.floor(aaD/86400) + " days"
+         		    } else if (aaD >= 3600) {
+         		    txt+= Math.floor(aaD/3600) + " hours"
+         		    } else if (aaD >= 60){
+         		    txt+= Math.floor(aaD/60) + " minutes"
+         		   } else {
+         		    txt= "Just started"
+         		}
+         		return txt;
+         		}
+         }
+         )
+         ;
+      </script>
+      <style>
+         .glyphicon {
+         font-size: 20px;
+         }
+         .thick {
+         font-weight: bold;
+         }
+         .info-panel {
+         padding: 50px;
+         text-align: left;
+         background: #dcdcdc;
+         border: solid 1px #c3c3c3;
+         }
+         .italic {
+         font-style: italic;
+         }
+         .pointer {
+         cursor: pointer;
+         }
+         .help {cursor: help;}
+         .rcorners {
+         border-radius: 25px;
+         border: solid 2px #c3c3c3;
+         padding: 20px;
+         margin : 5px;	
+         width: auto;
+         height: auto;    
+         }
+         .glyphicon-ok-circle {
+         color: green;
+         }
+         .glyphicon-remove-circle {
+         color: red;
+         }
+         .glyphicon-blue {
+         color: #00bfff;
+         }
+         .upperclass {
+         text-transform: uppercase;
+         }
+         .loading {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         }
+         .loading-bar {
+         display: inline-block;
+         width: 4px;
+         height: 18px;
+         border-radius: 4px;
+         animation: loading 1s ease-in-out infinite;
+         }
+         .loading-bar:nth-child(1) {
+         background-color: #3498db;
+         animation-delay: 0;
+         }
+         .loading-bar:nth-child(2) {
+         background-color: #c0392b;
+         animation-delay: 0.09s;
+         }
+         .loading-bar:nth-child(3) {
+         background-color: #f1c40f;
+         animation-delay: .18s;
+         }
+         .loading-bar:nth-child(4) {
+         background-color: #27ae60;
+         animation-delay: .27s;
+         }
+         @keyframes loading {
+         0% {
+         transform: scale(1);
+         }
+         20% {
+         transform: scale(1, 2.2);
+         }
+         40% {
+         transform: scale(1);
+         }
+         }
+      </style>
+   </head>
+   <body style="height:1500px">
+      <div ng-app="myApp" ng-controller="myCtrl">
+         <div ng-show="!loaded" class="loading">
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+         </div>
+         <nav class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <a class="navbar-brand" href="#">{{team}} Micro Services Dashboard</a>
+                  </ul>
+               </div>
+            </div>
+         </nav>
+         <div class="container" style="margin-top:50px">
+            <div class="rcorners" ng-repeat="env in envs">
+               <h2 id="{{env.name}}h" class="pointer upperclass" ng-click="expandenv = !expandenv">{{env.name}} environments</h2>
+               <div id="{{env.name}}" ng-show="expandenv">
+                  <table class="table table-hover table-condensed">
+                     <thead>
+                        <tr>
+                           <th><span class="glyphicon glyphicon-tasks glyphicon-blue"></th>
+                           <th><span class="glyphicon glyphicon-cd glyphicon-blue"></th>
+                           <th><span class="glyphicon glyphicon-cloud glyphicon-blue"></th>
+                           <th><span class="glyphicon glyphicon-info-sign glyphicon-blue"></span></th>
+                           <th><span class="glyphicon glyphicon-signal glyphicon-blue"></span></th>
+                           <th><span class="glyphicon glyphicon-time glyphicon-blue"></span></th>
+                           <th></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr id="row-{{env.name}}-{{pod.pod}}-{{pod.server}}" class="thick help" ng-repeat-start="pod in env.config" ng-click="expand = !expand">
+                           <td>{{pod.name}}</td>
+                           <td>{{pod.pod}}</td>
+                           <td class="upperclass">{{pod.server}}</td>
+                           <td><span ng-show="pod.ok">{{pod.maven}}</span></td>
+                           <td><span ng-show="pod.ok" class="glyphicon glyphicon-ok-circle"></span><span ng-show="pod.ok == false" class="glyphicon glyphicon-remove-circle"></span></td>
+                           <td><span ng-show="pod.ok">{{pod.runningSince}}</span></td>
+                           <td class="pointer" ng-click="refresh(pod); $event.stopPropagation();"><i ng-show="!pod.spin" class="fa fa-refresh" style="font-size:24px"></i><i ng-show="pod.spin" class="fa fa-refresh fa-spin" style="font-size:24px"></i></td>
+                        </tr>
+                        <tr ng-repeat-end>
+                           <td id="panel-{{env.name}}-{{pod.pod}}-{{pod.server}}" class="info-panel" colspan="7" ng-show="expand">
+                              <div class="row" ng-show="pod.ok">
+                                 <div class="col-sm-1">Title</div>
+                                 <div class="col-sm-4 italic">{{pod.title}}</div>
+                                 <div class="col-sm-1">Description</div>
+                                 <div class="col-sm-4 italic">{{pod.description}}</div>
+                              </div>
+                              <div class="row" ng-show="pod.ok">
+                                 <div class="col-sm-1">Deployed</div>
+                                 <div class="col-sm-4 italic">{{pod.printdate}}</div>
+                                 <div class="col-sm-1">Pod</div>
+                                 <div class="col-sm-4 italic">{{pod.hostFullName}}</div>
+                              </div>
+                              <div class="row" ng-show="pod.ok">
+                                 <div class="col-sm-1">Api</div>
+                                 <div class="col-sm-4 italic">v{{pod.apiVersion}}</div>
+                                 <div class="col-sm-1">Lib</div>
+                                 <div class="col-sm-4 italic">v{{pod.libVersion}}</div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-sm-1">Kube</div>
+                                 <div class="col-sm-4 italic">{{pod.kube}}</div>
+                                 <div class="col-sm-1">VM</div>
+                                 <div class="col-sm-4 italic">{{pod.vm}}</div>
+                              </div>
+                              <div class="row" ng-show="pod.ok">
+                                 <div class="col-sm-1">Info</div>
+                                 <div class="col-sm-4 italic"><a href="{{pod.url}}" target="blank"><span class="glyphicon glyphicon-link"></a></div>
+                                 <div class="col-sm-1">Api Doc</div>
+                                 <div class="col-sm-4 italic"><a href="{{pod.apidoc}}" target="blank"><span class="glyphicon glyphicon-link"></a></div>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
