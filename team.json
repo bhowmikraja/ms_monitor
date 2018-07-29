@@ -30,7 +30,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
@@ -94,7 +94,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
@@ -158,7 +158,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
@@ -222,7 +222,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
@@ -286,7 +286,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
@@ -350,7 +350,7 @@
         {
           "name": "DMS DM",
           "pod": "svc-dms-dm",
-          "path": "/device-dm/v1/device/provision"
+          "path": "/devicemanagement/v3"
         },
         {
           "name": "AUTOCAT Facade",
